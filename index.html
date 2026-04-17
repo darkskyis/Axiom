@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solène — Creative Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #0d0d0b;
+    --ink-mid: #2a2a26;
+    --ink-soft: #5a5a54;
+    --cream: #f5f2eb;
+    --cream-mid: #ede9df;
+    --gold: #c9a96e;
+    --gold-light: #e8d5b0;
+    --white: #faf9f6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--white);
+    color: var(--ink);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--ink);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, background 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 38px; height: 38px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1), width 0.3s, height 0.3s, border-color 0.2s;
+  }
+  body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    width: 60px; height: 60px;
+    border-color: var(--gold);
+  }
+  body:has(a:hover) .cursor,
+  body:has(button:hover) .cursor {
+    background: var(--gold);
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: multiply;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 3rem; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 3px;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    padding: 12rem 4rem 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-title {
+    font-size: clamp(4.5rem, 7vw, 7.5rem);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  .hero-subtitle {
+    font-size: 1.35rem;
+    font-weight: 300;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 420px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.6s forwards;
+  }
+  .hero-cta {
+    display: flex; gap: 1.5rem; align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.8s forwards;
+  }
+  .btn-primary {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    cursor: none;
+    text-decoration: none;
+    transition: background 0.3s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+  .btn-ghost {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.3s, gap 0.3s;
+  }
+  .btn-ghost:hover { color: var(--gold); gap: 0.9rem; }
+  .btn-ghost::after { content: '→'; font-family: serif; font-size: 1rem; }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+  }
+  .hero-image-panel {
+    width: 100%; height: 100%;
+    background:
+      linear-gradient(135deg, var(--cream) 0%, var(--cream-mid) 60%, var(--gold-light) 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-shape {
+    position: absolute;
+    opacity: 0;
+    animation: fadeIn 1.2s 0.5s forwards;
+  }
+  .shape-circle {
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .shape-line-v {
+    width: 1px; height: 200px;
+    background: var(--gold);
+    top: 20%; right: 30%;
+  }
+  .shape-line-h {
+    width: 200px; height: 1px;
+    background: var(--gold);
+    bottom: 28%; left: 18%;
+  }
+  .shape-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    top: 38%; left: 38%;
+  }
+  .hero-number {
+    position: absolute;
+    bottom: 3rem; right: 3rem;
+    font-size: 9rem;
+    font-weight: 300;
+    color: rgba(201, 169, 110, 0.15);
+    line-height: 1;
+    font-style: italic;
+    user-select: none;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 3rem; left: 4rem;
+    display: flex; align-items: center; gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 1.2s forwards;
+  }
+  .scroll-line {
+    width: 48px; height: 1px;
+    background: var(--ink-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--gold);
+    animation: scrollLine 2s 1.5s infinite;
+  }
+  .scroll-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* Section base */
+  section {
+    padding: 10rem 4rem;
+    position: relative;
+  }
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--gold);
+  }
+
+  /* About */
+  .about {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: center;
+  }
+  .about-title {
+    font-size: clamp(2.8rem, 4vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+  }
+  .about-title em { font-style: italic; color: var(--gold); }
+  .about-body {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem; margin-top: 3.5rem;
+  }
+  .stat-num {
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .about-image-frame {
+    position: relative;
+    aspect-ratio: 3/4;
+    background: var(--cream-mid);
+    overflow: hidden;
+  }
+  .about-image-inner {
+    width: 100%; height: 100%;
+    background:
+      linear-gradient(160deg, #e8e0d0 0%, #d4c9b4 50%, #c9a96e30 100%);
+    display: flex; align-items: flex-end;
+    padding: 2rem;
+  }
+  .frame-accent {
+    position: absolute;
+    top: -1.5rem; left: -1.5rem;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    border: 1px solid var(--gold);
+    pointer-events: none;
+  }
+
+  /* Work / Portfolio */
+  .work { background: var(--white); }
+  .work-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 5rem;
+  }
+  .work-title {
+    font-size: clamp(2.8rem, 4vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+  .work-title em { font-style: italic; }
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5px;
+  }
+  .work-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: auto;
+    cursor: none;
+  }
+  .work-item:first-child { grid-row: span 2; aspect-ratio: 2/3; }
+  .work-item:not(:first-child) { aspect-ratio: 4/3; }
+  .work-bg {
+    width: 100%; height: 100%;
+    transition: transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .work-item:hover .work-bg { transform: scale(1.06); }
+  .w1 { background: linear-gradient(145deg, #2a2a26, #5a5a54); }
+  .w2 { background: linear-gradient(145deg, #c9a96e, #e8d5b0); }
+  .w3 { background: linear-gradient(145deg, #d4c9b4, #ede9df); }
+  .work-overlay {
+    position: absolute; inset: 0;
+    background: rgba(13,13,11,0);
+    transition: background 0.4s;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.5rem;
+  }
+  .work-item:hover .work-overlay { background: rgba(13,13,11,0.5); }
+  .work-meta {
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.4s 0.05s;
+  }
+  .work-item:hover .work-meta { transform: translateY(0); opacity: 1; }
+  .work-cat {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+  .work-name {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  /* Services */
+  .services {
+    background: var(--ink);
+    color: var(--white);
+  }
+  .services .section-label { color: var(--gold); }
+  .services .section-label::before { background: var(--gold); }
+  .services-header {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8rem; align-items: end;
+    margin-bottom: 6rem;
+  }
+  .services-title {
+    font-size: clamp(2.8rem, 4vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--white);
+  }
+  .services-title em { font-style: italic; color: var(--gold); }
+  .services-intro {
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(250,249,246,0.55);
+  }
+  .services-list { list-style: none; }
+  .service-item {
+    border-top: 1px solid rgba(201,169,110,0.2);
+    padding: 2.2rem 0;
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    transition: background 0.3s;
+    cursor: none;
+    position: relative;
+  }
+  .service-item::after {
+    content: '';
+    position: absolute; left: 0; bottom: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .service-item:hover::after { width: 100%; }
+  .service-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+  .service-name {
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--white);
+  }
+  .service-arrow {
+    font-size: 1.2rem;
+    color: var(--gold);
+    transition: transform 0.3s;
+  }
+  .service-item:hover .service-arrow { transform: translateX(6px); }
+
+  /* Process */
+  .process { background: var(--cream); }
+  .process-title {
+    font-size: clamp(2.8rem, 4vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 5rem;
+    max-width: 600px;
+  }
+  .process-title em { font-style: italic; color: var(--gold); }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+  }
+  .process-step {
+    background: var(--white);
+    padding: 3rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .step-num {
+    font-size: 5rem;
+    font-weight: 300;
+    color: var(--cream-mid);
+    line-height: 1;
+    margin-bottom: 2rem;
+    transition: color 0.3s;
+  }
+  .process-step:hover .step-num { color: var(--gold-light); }
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .step-desc {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+
+  /* Testimonials */
+  .testimonials {
+    background: var(--white);
+    text-align: center;
+    padding: 10rem 12rem;
+  }
+  .testimonial-quote {
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    position: relative;
+  }
+  .testimonial-quote::before {
+    content: '\201C';
+    font-size: 8rem;
+    color: var(--gold-light);
+    position: absolute;
+    top: -3rem; left: -2rem;
+    line-height: 1;
+    font-style: normal;
+  }
+  .testimonial-author {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .testimonial-dots {
+    display: flex; gap: 0.75rem; justify-content: center;
+    margin-top: 3rem;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--cream-mid);
+    border: none; cursor: none;
+    transition: background 0.3s, transform 0.3s;
+    padding: 0;
+  }
+  .dot.active { background: var(--gold); transform: scale(1.3); }
+
+  /* Contact */
+  .contact {
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: start;
+  }
+  .contact-title {
+    font-size: clamp(2.8rem, 4vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .contact-title em { font-style: italic; color: var(--gold); }
+  .contact-sub {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    margin-bottom: 3rem;
+  }
+  .contact-details { margin-top: 2rem; }
+  .contact-detail {
+    display: flex; align-items: baseline;
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--cream-mid);
+  }
+  .cd-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    min-width: 80px;
+  }
+  .cd-value {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .cd-value:hover { color: var(--gold); }
+  .contact-form { }
+  .form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .form-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--cream-mid);
+    padding: 0.75rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-bottom-color: var(--gold);
+  }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: var(--cream-mid);
+  }
+  .form-submit {
+    margin-top: 2.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    background: var(--ink);
+    color: var(--white);
+    border: none;
+    cursor: none;
+    transition: background 0.3s, transform 0.2s;
+    width: 100%;
+  }
+  .form-submit:hover { background: var(--gold); transform: translateY(-2px); }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: var(--white);
+    padding: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .footer-copy {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(250,249,246,0.4);
+  }
+  .footer-social {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .footer-social a {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250,249,246,0.4);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-social a:hover { color: var(--gold); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes scrollLine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Mobile nav toggle */
+  .nav-toggle { display: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .nav-links { display: none; }
+    .nav-toggle {
+      display: flex; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: none; padding: 4px;
+    }
+    .nav-toggle span {
+      display: block; width: 26px; height: 1px;
+      background: var(--ink); transition: 0.3s;
+    }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { height: 60vw; }
+    .hero-left { padding: 8rem 2rem 4rem; }
+    .about, .contact { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2rem; }
+    .services { padding: 5rem 2rem; }
+    .services-header { grid-template-columns: 1fr; gap: 2rem; }
+    .process { padding: 5rem 2rem; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .testimonials { padding: 6rem 2rem; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-item:first-child { grid-row: span 1; aspect-ratio: 4/3; }
+    section { padding: 5rem 2rem; }
+    footer { flex-direction: column; gap: 2rem; text-align: center; padding: 3rem 2rem; }
+    .service-item { grid-template-columns: 40px 1fr auto; gap: 1rem; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="nav-logo">Solène</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Creative Studio — Est. 2019</p>
+    <h1 class="hero-title">
+      Craft &amp;<br><em>Concept.</em>
+    </h1>
+    <p class="hero-subtitle">
+      We design experiences that move, brands that endure, and interfaces with meaning.
+    </p>
+    <div class="hero-cta">
+      <a href="#work" class="btn-primary">View Work</a>
+      <a href="#contact" class="btn-ghost">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-panel">
+      <div class="hero-shape shape-circle"></div>
+      <div class="hero-shape shape-line-v"></div>
+      <div class="hero-shape shape-line-h"></div>
+      <div class="hero-shape shape-dot"></div>
+      <span class="hero-number">01</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="reveal">
+    <p class="section-label">Our Story</p>
+    <h2 class="about-title">
+      Where vision<br>meets <em>craft</em>
+    </h2>
+    <p class="about-body">
+      Solène is a creative studio with a passion for thoughtful, refined design.
+      We collaborate with founders, brands, and visionaries to build identities
+      that feel inevitable — as if they couldn't have been any other way.
+    </p>
+    <p class="about-body">
+      Every project begins with deep listening and ends with precision. 
+      We believe the best design disappears into the work itself.
+    </p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-num">87+</div>
+        <div class="stat-label">Projects delivered</div>
+      </div>
+      <div>
+        <div class="stat-num">6</div>
+        <div class="stat-label">Years of craft</div>
+      </div>
+      <div>
+        <div class="stat-num">40+</div>
+        <div class="stat-label">Clients worldwide</div>
+      </div>
+      <div>
+        <div class="stat-num">12</div>
+        <div class="stat-label">Design awards</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s;">
+    <div class="about-image-frame">
+      <div class="frame-accent"></div>
+      <div class="about-image-inner">
+        <p style="font-size:1rem; font-weight:300; font-style:italic; color:var(--ink-soft); max-width:260px; line-height:1.8;">
+          "Design is not just what it looks like. Design is how it works."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="work-header reveal">
+    <div>
+      <p class="section-label">Selected Work</p>
+      <h2 class="work-title">Recent<br><em>projects</em></h2>
+    </div>
+    <a href="#contact" class="btn-ghost" style="font-family:'Syne',sans-serif; font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-soft); text-decoration:none; display:flex; align-items:center; gap:0.5rem; transition:color 0.3s, gap 0.3s;">
+      View all work →
+    </a>
+  </div>
+  <div class="work-grid reveal">
+    <div class="work-item">
+      <div class="work-bg w1"></div>
+      <div class="work-overlay">
+        <div class="work-meta">
+          <p class="work-cat">Brand Identity</p>
+          <p class="work-name">Maison<br>Devereux</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-item">
+      <div class="work-bg w2"></div>
+      <div class="work-overlay">
+        <div class="work-meta">
+          <p class="work-cat">Web Design</p>
+          <p class="work-name">Aurum<br>Collective</p>
+        </div>
+      </div>
+    </div>
+    <div class="work-item">
+      <div class="work-bg w3"></div>
+      <div class="work-overlay">
+        <div class="work-meta">
+          <p class="work-cat">Art Direction</p>
+          <p class="work-name">Studio<br>Verlaine</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header reveal">
+    <div>
+      <p class="section-label">What We Do</p>
+      <h2 class="services-title">Crafted for<br><em>distinction</em></h2>
+    </div>
+    <p class="services-intro">
+      From brand conception to digital experience, we bring a considered,
+      methodical approach to every discipline we practise.
+    </p>
+  </div>
+  <ul class="services-list reveal">
+    <li class="service-item">
+      <span class="service-num">01</span>
+      <span class="service-name">Brand Identity &amp; Strategy</span>
+      <span class="service-arrow">→</span>
+    </li>
+    <li class="service-item">
+      <span class="service-num">02</span>
+      <span class="service-name">Web Design &amp; Development</span>
+      <span class="service-arrow">→</span>
+    </li>
+    <li class="service-item">
+      <span class="service-num">03</span>
+      <span class="service-name">Art Direction &amp; Visual Design</span>
+      <span class="service-arrow">→</span>
+    </li>
+    <li class="service-item">
+      <span class="service-num">04</span>
+      <span class="service-name">Motion &amp; Interactive Design</span>
+      <span class="service-arrow">→</span>
+    </li>
+    <li class="service-item">
+      <span class="service-num">05</span>
+      <span class="service-name">Creative Consultancy</span>
+      <span class="service-arrow">→</span>
+    </li>
+  </ul>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <p class="section-label reveal">Our Process</p>
+  <h2 class="process-title reveal">How we<br>make <em>great work</em></h2>
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h3 class="step-title">Discover</h3>
+      <p class="step-desc">We listen deeply. Understand your vision, audience, and the space you inhabit in the world.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Define</h3>
+      <p class="step-desc">We crystallise the strategic core — positioning, voice, and the visual language that will carry it.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h3 class="step-title">Design</h3>
+      <p class="step-desc">We craft with intention. Every choice is deliberate, every element earns its place.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h3 class="step-title">Deliver</h3>
+      <p class="step-desc">We hand over work built to last, with full documentation and ongoing support.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="reveal">
+    <blockquote class="testimonial-quote" id="testimonial-text">
+      Working with Solène transformed how we think about our brand. The result was beyond anything we imagined possible.
+    </blockquote>
+    <p class="testimonial-author" id="testimonial-author">— Claire Fontaine, CEO of Maison Devereux</p>
+    <div class="testimonial-dots">
+      <button class="dot active" onclick="setTestimonial(0)" aria-label="Testimonial 1"></button>
+      <button class="dot" onclick="setTestimonial(1)" aria-label="Testimonial 2"></button>
+      <button class="dot" onclick="setTestimonial(2)" aria-label="Testimonial 3"></button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <p class="section-label">Let's Talk</p>
+    <h2 class="contact-title">Start a<br><em>project</em></h2>
+    <p class="contact-sub">
+      We take on a limited number of projects each season to ensure
+      every client receives our full attention and best work.
+    </p>
+    <div class="contact-details">
+      <div class="contact-detail">
+        <span class="cd-label">Email</span>
+        <a href="mailto:hello@solene.studio" class="cd-value">hello@solene.studio</a>
+      </div>
+      <div class="contact-detail">
+        <span class="cd-label">Location</span>
+        <span class="cd-value">Paris, FR — Remote worldwide</span>
+      </div>
+      <div class="contact-detail">
+        <span class="cd-label">Availability</span>
+        <span class="cd-value">Open for Q3 2026</span>
+      </div>
+    </div>
+  </div>
+  <div class="reveal" style="transition-delay: 0.2s;">
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label" for="name">Your Name</label>
+        <input class="form-input" type="text" id="name" placeholder="First &amp; last name" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" type="email" id="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="project">Project Type</label>
+        <input class="form-input" type="text" id="project" placeholder="Brand, Web, Art Direction…">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">Tell Us More</label>
+        <textarea class="form-textarea" id="message" placeholder="Describe your vision…"></textarea>
+      </div>
+      <button type="submit" class="form-submit" id="submit-btn">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Solène</span>
+  <p class="footer-copy">© 2026 Solène Creative Studio. All rights reserved.</p>
+  <ul class="footer-social">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">Behance</a></li>
+    <li><a href="#">LinkedIn</a></li>
+  </ul>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+// Testimonials
+const testimonials = [
+  { text: "Working with Solène transformed how we think about our brand. The result was beyond anything we imagined possible.", author: "— Claire Fontaine, CEO of Maison Devereux" },
+  { text: "The team's ability to translate an abstract vision into a coherent, beautiful identity is genuinely rare. Extraordinary work.", author: "— Edouard Blanc, Founder of Aurum Collective" },
+  { text: "Meticulous, inspired, and deeply collaborative. Solène elevated our entire digital presence with elegance and intelligence.", author: "— Isabelle Moreau, Creative Director at Verlaine" }
+];
+const tText = document.getElementById('testimonial-text');
+const tAuthor = document.getElementById('testimonial-author');
+const dots = document.querySelectorAll('.dot');
+
+function setTestimonial(i) {
+  tText.style.opacity = 0;
+  tAuthor.style.opacity = 0;
+  setTimeout(() => {
+    tText.textContent = testimonials[i].text;
+    tAuthor.textContent = testimonials[i].author;
+    tText.style.opacity = 1;
+    tAuthor.style.opacity = 1;
+  }, 300);
+  dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+}
+tText.style.transition = 'opacity 0.4s';
+tAuthor.style.transition = 'opacity 0.4s';
+
+// Auto-rotate testimonials
+let ti = 0;
+setInterval(() => { ti = (ti + 1) % 3; setTestimonial(ti); }, 5000);
+
+// Contact form
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Sending…';
+  btn.style.background = '#c9a96e';
+  setTimeout(() => {
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#5a5a54';
+    e.target.reset();
+    setTimeout(() => {
+      btn.textContent = 'Send Message';
+      btn.style.background = '';
+    }, 3500);
+  }, 1400);
+}
+
+// Smooth nav background on scroll
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.background = window.scrollY > 50 ? 'rgba(245,242,235,0.92)' : 'transparent';
+  nav.style.backdropFilter = window.scrollY > 50 ? 'blur(12px)' : 'none';
+  nav.style.transition = 'background 0.4s, backdrop-filter 0.4s';
+  nav.style.mixBlendMode = 'normal';
+});
+
+// Mobile nav toggle
+document.querySelector('.nav-toggle').addEventListener('click', () => {
+  const links = document.querySelector('.nav-links');
+  const isOpen = links.style.display === 'flex';
+  links.style.display = isOpen ? 'none' : 'flex';
+  links.style.flexDirection = 'column';
+  links.style.position = 'absolute';
+  links.style.top = '100%';
+  links.style.left = '0';
+  links.style.right = '0';
+  links.style.background = 'var(--cream)';
+  links.style.padding = '2rem';
+  links.style.gap = '1.5rem';
+});
+</script>
+</body>
+</html>
