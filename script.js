@@ -102,6 +102,26 @@
     });
   });
 
+  document.querySelectorAll("[data-card-link]").forEach(function (card) {
+    function openCardLink(event) {
+      if (event.target.closest("a, button")) {
+        return;
+      }
+      const destination = card.getAttribute("data-card-link");
+      if (destination) {
+        window.location.href = destination;
+      }
+    }
+
+    card.addEventListener("click", openCardLink);
+    card.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openCardLink(event);
+      }
+    });
+  });
+
   function setupInsightTabs() {
     const insightTabs = document.querySelectorAll("[data-insight-tab]");
     const insightPanels = document.querySelectorAll("[data-insight-panel]");

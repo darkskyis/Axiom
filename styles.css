@@ -557,6 +557,19 @@ h3 {
   box-shadow: var(--shadow-soft);
 }
 
+.team-card.clickable-card {
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.team-card.clickable-card:hover,
+.team-card.clickable-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(181, 138, 60, 0.38);
+  box-shadow: var(--shadow);
+  outline: none;
+}
+
 .team-card::before {
   position: absolute;
   inset: 0 0 auto;
@@ -607,13 +620,46 @@ h3 {
   font-size: 1.32rem;
 }
 
+.team-card h3 a:hover {
+  color: var(--emerald);
+}
+
 .team-card p {
   color: var(--muted);
 }
 
+.team-contact {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.team-contact a {
+  display: grid;
+  gap: 2px;
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.team-contact span {
+  color: var(--stone);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.team-contact a:hover {
+  color: var(--emerald);
+}
+
 .profile-link {
   display: inline-flex;
-  margin-top: 18px;
+  margin-top: 16px;
+  margin-right: 16px;
   color: var(--emerald);
   font-weight: 900;
   text-decoration: underline;
