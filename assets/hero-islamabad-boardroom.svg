@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Abstract Islamabad business district and boardroom visual">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#31433b"/>
+      <stop offset="0.45" stop-color="#1d2b27"/>
+      <stop offset="1" stop-color="#111411"/>
+    </linearGradient>
+    <linearGradient id="brass" x1="0" x2="1">
+      <stop offset="0" stop-color="#d8bf82" stop-opacity=".88"/>
+      <stop offset="1" stop-color="#8f7138" stop-opacity=".72"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <path d="M0 640 C250 560 378 610 560 544 C720 486 830 378 1040 410 C1268 444 1388 340 1600 284 L1600 1000 L0 1000 Z" fill="#17221f"/>
+  <path d="M760 265 L1040 72 L1320 265 L1272 294 L1040 138 L808 294 Z" fill="url(#brass)" opacity=".68"/>
+  <path d="M820 310 H1260 V810 H820 Z" fill="#25342f" opacity=".84"/>
+  <path d="M880 342 H936 V810 H880 Z M976 342 H1032 V810 H976 Z M1072 342 H1128 V810 H1072 Z M1168 342 H1224 V810 H1168 Z" fill="#101512" opacity=".9"/>
+  <path d="M846 300 H1236" stroke="#d8bf82" stroke-width="10" opacity=".7"/>
+  <path d="M122 765 C326 680 466 676 640 722 C806 766 988 720 1168 682 C1364 642 1482 700 1600 744 L1600 1000 L122 1000 Z" fill="#0f130f" opacity=".88"/>
+  <ellipse cx="980" cy="805" rx="600" ry="92" fill="#080a08" opacity=".75"/>
+  <path d="M392 748 H1280 L1195 910 H262 Z" fill="#2b2419"/>
+  <path d="M450 772 H1222 L1162 884 H332 Z" fill="#44351f"/>
+  <path d="M470 790 H1204" stroke="#d8bf82" stroke-width="3" opacity=".42"/>
+  <path d="M520 822 H1148" stroke="#d8bf82" stroke-width="2" opacity=".28"/>
+  <g opacity=".78">
+    <rect x="364" y="650" width="102" height="152" rx="4" fill="#101512"/>
+    <rect x="388" y="670" width="54" height="92" fill="#31443c"/>
+    <rect x="548" y="615" width="112" height="188" rx="4" fill="#121915"/>
+    <rect x="576" y="638" width="56" height="106" fill="#31443c"/>
+    <rect x="1288" y="620" width="126" height="204" rx="4" fill="#111714"/>
+    <rect x="1322" y="650" width="58" height="104" fill="#31443c"/>
+  </g>
+  <g opacity=".26" stroke="#d8bf82" stroke-width="2" fill="none">
+    <path d="M112 178 H702"/>
+    <path d="M112 226 H608"/>
+    <path d="M112 274 H486"/>
+    <path d="M1160 150 H1488"/>
+    <path d="M1210 198 H1518"/>
+    <path d="M1270 246 H1532"/>
+  </g>
+  <circle cx="1330" cy="158" r="96" fill="#d8bf82" opacity=".16" filter="url(#soft)"/>
+</svg>
