@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://axiomchambers.pk/sitemap.xml
+Sitemap: https://axiompakistan.com/sitemap.xml

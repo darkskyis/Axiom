@@ -84,9 +84,26 @@ textarea {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: max-content;
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(181, 138, 60, 0.4);
+  border-radius: 50%;
+  background: #050505;
+  object-fit: cover;
+  box-shadow: 0 8px 22px rgba(16, 18, 20, 0.14);
+}
+
+.brand-text {
   display: grid;
   gap: 2px;
-  min-width: max-content;
 }
 
 .brand-mark {
@@ -105,6 +122,18 @@ textarea {
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.footer-brand .brand-logo {
+  width: 58px;
+  height: 58px;
 }
 
 .nav-links {
@@ -601,6 +630,129 @@ h3 {
   text-decoration-style: dashed;
 }
 
+.insights-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.34fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.insight-tabs {
+  position: sticky;
+  top: 104px;
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 250, 241, 0.82);
+  box-shadow: var(--shadow-soft);
+}
+
+.insight-tab {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(23, 61, 53, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.48);
+  color: var(--charcoal);
+  cursor: pointer;
+  font-weight: 900;
+  text-align: left;
+  padding: 10px 16px;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.insight-tab:hover,
+.insight-tab.active {
+  transform: translateY(-1px);
+  border-color: var(--emerald);
+  background: var(--emerald);
+  color: var(--white);
+}
+
+.insight-panels {
+  min-width: 0;
+}
+
+.insight-panel {
+  display: none;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 250, 241, 0.9);
+  padding: clamp(24px, 4vw, 42px);
+  box-shadow: var(--shadow-soft);
+}
+
+.insight-panel.active {
+  display: block;
+}
+
+.insight-panel h2 {
+  margin-bottom: 18px;
+  font-size: clamp(1.6rem, 2.8vw, 2.55rem);
+}
+
+.insight-panel > p {
+  color: var(--muted);
+}
+
+.checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 26px 0;
+}
+
+.checklist-grid div {
+  border: 1px solid rgba(23, 61, 53, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.48);
+  padding: 18px;
+}
+
+.checklist-grid strong {
+  display: block;
+  color: var(--charcoal);
+  margin-bottom: 8px;
+}
+
+.checklist-grid span,
+.insight-note,
+.insight-list li {
+  color: var(--muted);
+}
+
+.insight-list {
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.insight-list li {
+  position: relative;
+  margin-bottom: 12px;
+  padding-left: 26px;
+}
+
+.insight-list li::before {
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold);
+  content: "";
+}
+
+.insight-note {
+  margin: 24px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-weight: 800;
+}
+
 .dark .tile p,
 .dark .matter p,
 .green .tile p {
@@ -1057,6 +1209,7 @@ textarea:focus {
   .grid.three,
   .grid.four,
   .team-grid,
+  .insights-layout,
   .section-header,
   .split,
   .footer-grid,
@@ -1074,6 +1227,10 @@ textarea:focus {
   }
 
   .aside-panel {
+    position: static;
+  }
+
+  .insight-tabs {
     position: static;
   }
 
@@ -1143,6 +1300,8 @@ textarea:focus {
   .grid.three,
   .grid.four,
   .team-grid,
+  .insights-layout,
+  .checklist-grid,
   .split,
   .footer-grid,
   .form-grid,
